@@ -5,7 +5,7 @@
         xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.21.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <changeSet id="create-client" author="Jefferson">
+    <changeSet id="create-enterprise-comifood" author="Jefferson">
         <createTable tableName="enterprise">
             <column name="idClientIfood" type="bigint">
                 <constraints primaryKey="true" nullable="false" />
@@ -24,4 +24,17 @@
             </column>
         </createTable>
     </changeSet>
+
+    <changeSet author="Jefferson" id="createIndex_IdClientIFood">
+        <createIndex indexName="index_IdClientFood" tableName="enterprise" unique="true">
+            <column name="IdClientIfood"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="Jefferson" id="createIndex_Enterprise">
+        <createIndex indexName="index_Enterprise" tableName="enterprise" unique="true">
+            <column name="enterprise"/>
+        </createIndex>
+    </changeSet>
+
 </databaseChangeLog>
