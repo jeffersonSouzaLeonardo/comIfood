@@ -7,17 +7,26 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
     <changeSet id="create-enterprise-comifood" author="Jefferson">
         <createTable tableName="enterprise">
-            <column name="idClientIfood" type="bigint">
+            <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="id_client_ifood" type="UUID">
+                <constraints primaryKey="false" nullable="false" />
+            </column>
+            <column name="client_secret" type="varchar(255)">
+                <constraints primaryKey="false" nullable="false" />
             </column>
             <column name="enterprise" type="varchar(255)">
-                <constraints primaryKey="true" nullable="false" />
+                <constraints primaryKey="false" nullable="false" />
             </column>
             <column name="token" type="LONGBLOB">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
-            <column name="dateTimeExpiredToken" type="datetime">
-                <constraints nullable="false" />
+            <column name="expire_in" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_time_expired_token" type="datetime">
+                <constraints nullable="true" />
             </column>
             <column name="status" type="varchar(15)">
                 <constraints nullable="false" />
@@ -26,8 +35,8 @@
     </changeSet>
 
     <changeSet author="Jefferson" id="createIndex_IdClientIFood">
-        <createIndex indexName="index_IdClientFood" tableName="enterprise" unique="true">
-            <column name="IdClientIfood"/>
+        <createIndex indexName="index_IdClientIfood" tableName="enterprise" unique="true">
+            <column name="id_client_ifood"/>
         </createIndex>
     </changeSet>
 
