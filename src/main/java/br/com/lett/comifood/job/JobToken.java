@@ -24,8 +24,8 @@ public class JobToken {
         WebClient webClient = WebClient.create();
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromUri(URI.create("https://merchant-api.ifood.com.br/authentication/v1.0/oauth/token"))
-                .queryParam("clientId", "a146c00b-c802-4481-bfcd-5bdb39885e5a")
-                .queryParam("clientSecret", "j6db2vapfsdch165gtnhwxyk24ftxoovifrrt5v42zdxdtwhje1ev1pg1xqkwaxfpl5lknkbnlrq70x0f7dqu522apg52zesjat")
+                .queryParam("clientId", "--")
+                .queryParam("clientSecret", "--")
                 .queryParam("grantType", "client_credentials");
         String urlWithParams = builder.build().toUriString();
 
