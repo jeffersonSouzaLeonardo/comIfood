@@ -22,7 +22,7 @@ public class EnterpriseEntity {
    private Long id;
 
    @Column(name="id_client_ifood")
-   private UUID idClientIfood;
+   private String idClientIfood;
 
    @Column(name="client_secret")
    private String clientSecret;

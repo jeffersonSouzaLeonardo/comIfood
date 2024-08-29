@@ -10,7 +10,7 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="id_client_ifood" type="UUID">
+            <column name="id_client_ifood" type="varchar(255)">
                 <constraints primaryKey="false" nullable="false" />
             </column>
             <column name="client_secret" type="varchar(255)">
