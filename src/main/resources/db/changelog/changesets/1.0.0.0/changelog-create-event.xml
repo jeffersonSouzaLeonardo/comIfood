@@ -7,10 +7,10 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
     <changeSet id="create-event-comifood" author="Jefferson">
         <createTable tableName="event">
-            <column name="id_sequence" type="bigint">
+            <column name="id" autoIncrement="true" type="bigint">
                 <constraints primaryKey="true" nullable="false" unique="true" />
             </column>
-            <column name="id" type="varchar(255)">
+            <column name="id_ifood" type="varchar(255)">
                 <constraints primaryKey="false" nullable="false" />
             </column>
             <column name="code" type="varchar(255)">
@@ -22,7 +22,7 @@
             <column name="order_id" type="varchar(255)">
                 <constraints primaryKey="false" nullable="false" />
             </column>
-            <column name="merchant_id" type="LONGBLOB">
+            <column name="merchant_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="created_at" type="datetime">
@@ -34,9 +34,9 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Jefferson" id="createIndex_id_polling">
-        <createIndex indexName="index_id_polling_event" tableName="event">
-            <column name="id_polling"/>
+    <changeSet author="Jefferson" id="createIndex_id">
+        <createIndex indexName="index_id_event" tableName="event">
+            <column name="id"/>
         </createIndex>
     </changeSet>
 

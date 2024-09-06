@@ -1,6 +1,7 @@
 package br.com.lett.comifood.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,12 +18,12 @@ import java.time.LocalDateTime;
 public class EventEntity {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
-   @Column(name="id_sequence")
-   private Long idSequence;
-
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name="id")
-   private String id;
+   private Long id;
+
+   @Column(name="id_ifood")
+   private String idIfood;
 
    @Column(name="code")
    private String code;

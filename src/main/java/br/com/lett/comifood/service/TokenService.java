@@ -1,5 +1,6 @@
 package br.com.lett.comifood.service;
 
+import br.com.lett.comifood.enuns.EnterpriseStatus;
 import br.com.lett.comifood.model.EnterpriseEntity;
 import br.com.lett.comifood.record.TokenRecord;
 import br.com.lett.comifood.repository.EnterpriseRepository;
@@ -22,7 +23,7 @@ public class TokenService  {
 
     public void updateTokens(){
 
-        List<EnterpriseEntity> enterprises = enterpriseRepository.findByStatus("ACTIVE");
+        List<EnterpriseEntity> enterprises = enterpriseRepository.findByStatus(EnterpriseStatus.ACTIVE);
 
         for (EnterpriseEntity enterprise : enterprises) {
 
@@ -41,6 +42,19 @@ public class TokenService  {
         }
     }
 
+    public void updateSingle(EnterpriseEntity enterprise){
+        TokenRecord tokenRecord = tokenRest.getToken(enterprise);
+
+        if (Objects.nonNull(tokenRecord)) {
+            enterprise.setToken(tokenRecord.accessToken());
+            enterprise.setExpireIn(tokenRecord.expiresIn());
+            LocalDateTime dateTimeExpiredToken = LocalDateTime.now().plusMinutes(tokenRecord.expiresIn() / 60);
+            enterprise.setDateTimeExpiredToken(dateTimeExpiredToken);
+        }
+        enterpriseRepository.saveAndFlush(enterprise);
+
+    }
+
     private boolean isUpdate(EnterpriseEntity enterprise){
         if((enterprise.getDateTimeExpiredToken() == null) ||
            (enterprise.getExpireIn() == null) ||
@@ -55,5 +69,6 @@ public class TokenService  {
 
         return false;
     }
+
 
 }

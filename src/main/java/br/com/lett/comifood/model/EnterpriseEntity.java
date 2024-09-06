@@ -1,5 +1,6 @@
 package br.com.lett.comifood.model;
 
+import br.com.lett.comifood.enuns.EnterpriseStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -40,7 +40,8 @@ public class EnterpriseEntity {
    private LocalDateTime dateTimeExpiredToken;
 
    @Column(name="status")
-   private String status;
+   @Enumerated(EnumType.STRING)
+   private EnterpriseStatus status;
 
 }
 

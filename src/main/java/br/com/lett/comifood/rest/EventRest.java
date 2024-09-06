@@ -2,7 +2,9 @@ package br.com.lett.comifood.rest;
 
 import br.com.lett.comifood.model.EnterpriseEntity;
 import br.com.lett.comifood.record.EventRecord;
+import br.com.lett.comifood.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -12,6 +14,9 @@ import java.util.List;
 @Slf4j
 @Component
 public class EventRest {
+
+    @Autowired
+    TokenService tokenService;
 
     private final String URI_EVENTS_POLLING = "https://merchant-api.ifood.com.br/events/v1.0/events:polling";
 
@@ -31,7 +36,7 @@ public class EventRest {
                 .onStatus(HttpStatusCode::is4xxClientError,
                         clientResponse -> {
                             log.error("Erro autenticação. Empresa:" + enterprise.getEnterprise());
-                            updateTokenError();
+                            updateTokenError(enterprise);
                             return Mono.error(new RuntimeException("Erro Autenticação"));
                         })
                 .onStatus(HttpStatusCode::is3xxRedirection,
@@ -46,8 +51,8 @@ public class EventRest {
         return result.block();
     }
 
-    private void updateTokenError(){
-
+    private void updateTokenError(EnterpriseEntity enterprise){
+        tokenService.updateSingle(enterprise);
     }
 
 }
