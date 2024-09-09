@@ -8,12 +8,14 @@ import br.com.lett.comifood.record.EventRecord;
 import br.com.lett.comifood.repository.EnterpriseRepository;
 import br.com.lett.comifood.repository.EventRepository;
 import br.com.lett.comifood.rest.EventRest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class EventService {
 
@@ -24,26 +26,33 @@ public class EventService {
     private EventRepository eventRepository;
 
     @Autowired
-    private EventRest eventRest;
-
-    @Autowired
     EventRecordEventEntityMapper eventRecordEventEntityMapper;
 
-    public void polling(){
-
-        List<EnterpriseEntity> enterprises = enterpriseRepository.findByStatus(EnterpriseStatus.ACTIVE);
-
-        for (EnterpriseEntity enterprise : enterprises) {
-
-            List<EventRecord> eventRecords = eventRest.polling(enterprise);
-
-            List<EventEntity> eventEntities = new ArrayList<>();
-            for (EventRecord eventFrom : eventRecords) {
-                EventEntity event = eventRecordEventEntityMapper.recordToEntity(eventFrom);
-                event.setStatus("STARTED");
-                eventRepository.saveAndFlush(event);
-            }
-        }
+    public EventEntity eventRecordEToventEntityMapper(EventRecord eventRecord){
+        return eventRecordEventEntityMapper.recordToEntity(eventRecord);
     }
+
+    public EventEntity save(EventEntity eventEntity){
+        try{
+
+            eventEntity = eventRepository.saveAndFlush(eventEntity);
+
+        } catch (Exception e){
+            log.error("Erro ao salvar Evento! Evento MerchantId: " +
+                       eventEntity.getMerchantId() +
+                       " - id Ifood: " +
+                       eventEntity.getIdIfood() +
+                       " - " + e.getMessage()
+            );
+        }
+
+        return eventEntity;
+    }
+
+    public List<EventEntity> findByIdIfood(String idIfood){
+        return eventRepository.findByIdIfood(idIfood);
+    }
+
+
 
 }

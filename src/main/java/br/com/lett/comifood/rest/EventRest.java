@@ -1,8 +1,8 @@
 package br.com.lett.comifood.rest;
 
+import br.com.lett.comifood.apicom.TokenApiCom;
 import br.com.lett.comifood.model.EnterpriseEntity;
 import br.com.lett.comifood.record.EventRecord;
-import br.com.lett.comifood.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
@@ -16,7 +16,7 @@ import java.util.List;
 public class EventRest {
 
     @Autowired
-    TokenService tokenService;
+    TokenApiCom tokenApiCom;
 
     private final String URI_EVENTS_POLLING = "https://merchant-api.ifood.com.br/events/v1.0/events:polling";
 
@@ -52,7 +52,8 @@ public class EventRest {
     }
 
     private void updateTokenError(EnterpriseEntity enterprise){
-        tokenService.updateSingle(enterprise);
+        log.info("Atualização de token de forma single. Empresa: " + enterprise.getEnterprise());
+        tokenApiCom.updateSingle(enterprise);
     }
 
 }
