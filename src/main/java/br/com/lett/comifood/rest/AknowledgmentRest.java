@@ -31,11 +31,13 @@ public class AknowledgmentRest {
                 .retrieve()
                 .bodyToMono(ClientResponse.class);
 
-        int statusCode = responseMono
-                .map(ClientResponse::statusCode)
-                .block().value();
+        if (responseMono != null) {
+            int statusCode = responseMono
+                    .map(ClientResponse::statusCode)
+                    .block().value();
 
-        log.info(" Envio do Aknowledgment, Status code: " + statusCode);
+            log.info(" Envio do Aknowledgment, Status code: " + statusCode);
+        }
 
     }
 }
